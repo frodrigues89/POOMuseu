@@ -1,11 +1,7 @@
-package edu.entity.pessoas.funcionarios;
+package edu.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import edu.entity.Exposicao;
-import edu.entity.ListaExposicoes;
-import edu.entity.pessoas.Funcionario;
 
 public class Curador extends Funcionario {
 	

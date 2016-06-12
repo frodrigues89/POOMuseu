@@ -1,6 +1,4 @@
-package edu.entity.pessoas.funcionarios;
-
-import edu.entity.pessoas.Funcionario;
+package edu.entity;
 
 public class Staff extends Funcionario{
 

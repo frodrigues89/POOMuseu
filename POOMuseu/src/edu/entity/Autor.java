@@ -1,8 +1,6 @@
-package edu.entity.pessoas;
+package edu.entity;
 
 import java.util.Date;
-
-import edu.entity.Pessoa;
 
 public class Autor extends Pessoa {
 	

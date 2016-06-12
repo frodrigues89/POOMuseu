@@ -1,11 +1,7 @@
-package edu.entity.pessoas;
+package edu.entity;
 
 import java.util.Date;
 import java.util.List;
-
-import edu.entity.Cargo;
-import edu.entity.Pessoa;
-import edu.entity.Setor;
 
 public class Funcionario extends Pessoa {
 	

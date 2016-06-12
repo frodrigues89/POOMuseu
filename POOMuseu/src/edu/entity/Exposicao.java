@@ -3,8 +3,8 @@ package edu.entity;
 import java.util.Date;
 import java.util.List;
 
-import edu.entity.pessoas.funcionarios.Curador;
-import edu.entity.pessoas.funcionarios.Guia;
+import edu.interfaces.ObserverVisitante;
+import edu.interfaces.SubjectVisitante;
 
 public class Exposicao {
 	
@@ -16,6 +16,7 @@ public class Exposicao {
 	private String descricaoExpo;
 	private Curador curador;
 	private List<Guia> listaGuias;
+	private List<Visitante> listaVisitantes;
 	
 	public Curador getCurador() {
 		return curador;
@@ -66,6 +67,12 @@ public class Exposicao {
 		this.listaGuias = listaGuias;
 	}
 	
+	public void addVisitante(Visitante v) {
+		listaVisitantes.add(v);
+	}
 	
+	public void removeVisitante(Visitante v) {
+		listaVisitantes.remove(v);
+	}
 	
 }
