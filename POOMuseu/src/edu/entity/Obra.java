@@ -1,20 +1,25 @@
 package edu.entity;
 
+import java.util.Date;
+
 public class Obra {
 	
 	private Integer codigoObra;
     private String tituloObra;
-    private String tipoDataObra;
-    private String mesObra;
-    private Integer anoObra;
-    private String seculoObra;
+    private Date dataObra;
     private String imagemObra;
     private Double alturaObra;
     private Double larguraObra;
     private Double profundidadeObra;
     private Double pesoObra;
-    private Integer codigoAutor;
-    private String autorObra;
+    private Autor autorObra;
+    private String infoAdicionais;
+	public String getInfoAdicionais() {
+		return infoAdicionais;
+	}
+	public void setInfoAdicionais(String infoAdicionais) {
+		this.infoAdicionais = infoAdicionais;
+	}
 	public Integer getCodigoObra() {
 		return codigoObra;
 	}
@@ -27,29 +32,11 @@ public class Obra {
 	public void setTituloObra(String tituloObra) {
 		this.tituloObra = tituloObra;
 	}
-	public String getTipoDataObra() {
-		return tipoDataObra;
+	public Date getDataObra() {
+		return dataObra;
 	}
-	public void setTipoDataObra(String tipoDataObra) {
-		this.tipoDataObra = tipoDataObra;
-	}
-	public String getMesObra() {
-		return mesObra;
-	}
-	public void setMesObra(String mesObra) {
-		this.mesObra = mesObra;
-	}
-	public Integer getAnoObra() {
-		return anoObra;
-	}
-	public void setAnoObra(Integer anoObra) {
-		this.anoObra = anoObra;
-	}
-	public String getSeculoObra() {
-		return seculoObra;
-	}
-	public void setSeculoObra(String seculoObra) {
-		this.seculoObra = seculoObra;
+	public void setDataObra(Date dataObra) {
+		this.dataObra = dataObra;
 	}
 	public String getImagemObra() {
 		return imagemObra;
@@ -81,16 +68,10 @@ public class Obra {
 	public void setPesoObra(Double pesoObra) {
 		this.pesoObra = pesoObra;
 	}
-	public Integer getCodigoAutor() {
-		return codigoAutor;
-	}
-	public void setCodigoAutor(Integer codigoAutor) {
-		this.codigoAutor = codigoAutor;
-	}
-	public String getAutorObra() {
+	public Autor getAutorObra() {
 		return autorObra;
 	}
-	public void setAutorObra(String autorObra) {
+	public void setAutorObra(Autor autorObra) {
 		this.autorObra = autorObra;
 	}
 	

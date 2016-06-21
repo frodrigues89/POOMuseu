@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.Properties;
+import java.util.concurrent.BrokenBarrierException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -28,6 +30,9 @@ import javax.swing.BoxLayout;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
+
+import edu.entity.Obra;
+
 import com.jgoodies.forms.layout.FormSpecs;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -52,7 +57,7 @@ public class TelaCrudObra implements ActionListener{
 	
 	private  JTextField txtCod = new JTextField();
 	private JTextField txtNomeObra = new JTextField();
-	private JTextField txtNomeAutores = new JTextField();
+	private JTextField txtNomeAutor = new JTextField();
 
 	private UtilDateModel model;
 	private JDatePickerImpl datePicker;
@@ -64,6 +69,7 @@ public class TelaCrudObra implements ActionListener{
 
 	
 	private JLabel lblImagem = new JLabel();
+	private JLabel lblNomeImagem = new JLabel();
 	
 	public TelaCrudObra() {
 		
@@ -101,13 +107,13 @@ public class TelaCrudObra implements ActionListener{
 		panelNomeObra.add(txtNomeObra);
 
 	
-		JLabel lblAutorAutores = new JLabel("Autor/ Autores:");
-		lblAutorAutores.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblAutorAutores.setBounds(10, 65, 100, 14);
-		panelNomeObra.add(lblAutorAutores);
+		JLabel lblAutorAutor = new JLabel("Autor:");
+		lblAutorAutor.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblAutorAutor.setBounds(10, 65, 100, 14);
+		panelNomeObra.add(lblAutorAutor);
 
-		txtNomeAutores.setBounds(120, 65, 347, 20);
-		panelNomeObra.add(txtNomeAutores);
+		txtNomeAutor.setBounds(120, 65, 347, 20);
+		panelNomeObra.add(txtNomeAutor);
 		
 		panelGeral.add(panelNomeObra);
 		
@@ -193,9 +199,17 @@ public class TelaCrudObra implements ActionListener{
 		
 		JPanel panelImagem = new JPanel();
 		panelImagem.setBounds(301, 99, 301, 295);
+		panelImagem.setLayout(new BorderLayout(0, 0));
+		
+		lblImagem.setIcon(new ImageIcon(TelaCrudObra.class.getResource("/edu/imageRepository/quadro128.png")));
+		lblImagem.setHorizontalAlignment(0);
+		panelImagem.add(lblImagem,BorderLayout.CENTER);
+		
+		lblNomeImagem.setText("INSIRA A IMAGEM DA OBRA!");
+		lblNomeImagem.setHorizontalAlignment(0);
+		panelImagem.add(lblNomeImagem, BorderLayout.SOUTH);
 		
 		panelGeral.add(panelImagem);
-		panelImagem.setLayout(null);
 	}
 
 	private void criarMenu(){
@@ -231,5 +245,34 @@ public class TelaCrudObra implements ActionListener{
 			frame.dispose();
 			new TelaCrudObra();
 		}
+	}
+	
+	//faltando o Autor
+	private void obraToForm(Obra o){
+		txtCod.setText(o.getCodigoObra().toString());
+		txtNomeObra.setText(o.getTituloObra());
+		txtNomeAutor.setText(o.getAutorObra().getNomePessoa());
+		model.setDate(o.getDataObra().getYear(), (o.getDataObra().getMonth()-1), o.getDataObra().getDay());
+		model.setSelected(true);
+		txtAltura.setText(o.getAlturaObra().toString());
+		txtLargura.setText(o.getLarguraObra().toString());
+		txtProfundidade.setText(o.getProfundidadeObra().toString());
+		txtPeso.setText(o.getPesoObra().toString());
+		txtInfoAdicionais.setText(o.getInfoAdicionais());
+	}
+	
+	//faltando o Autor
+	private Obra formToObra (){
+		Obra o = new Obra();
+		o.setCodigoObra( Integer.parseInt( txtCod.getText() ) );
+		o.setTituloObra( txtNomeObra.getText() );
+		o.setDataObra( (Date) datePicker.getModel().getValue() );
+		o.setAlturaObra( Double.parseDouble(txtAltura.getText() ) );
+		o.setLarguraObra( Double.parseDouble(txtLargura.getText() ) );
+		o.setProfundidadeObra( Double.parseDouble(txtProfundidade.getText() ) );
+		o.setPesoObra(Double.parseDouble( txtPeso.getText() ) );
+		o.setInfoAdicionais( txtInfoAdicionais.getText() );
+		
+		return o;
 	}
 }
