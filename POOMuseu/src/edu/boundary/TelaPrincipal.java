@@ -16,12 +16,6 @@ import javax.swing.ImageIcon;
 public class TelaPrincipal implements ActionListener {
 
 	private JFrame frame = new JFrame();
-	private JMenu menuAdm = new JMenu("Administrativo");
-	private JMenu menuCadastros = new JMenu("Cadastros");
-	private JMenu mnVisitantes = new JMenu("Visitantes");
-	private JMenuItem menuAutores = new JMenuItem("Autores");
-	private JMenuItem menuExposicoes = new JMenuItem("Exposi\u00E7\u00F5es");
-	private JMenuItem menuObras = new JMenuItem("Obras");
 
 	public TelaPrincipal() {		
 		criarTela();
@@ -29,20 +23,8 @@ public class TelaPrincipal implements ActionListener {
 	}
 	
 	private void criarTela(){
-		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
-			
-		menuBar.add(menuAdm);
-		
-		menuBar.add(menuCadastros);
-			
-			menuCadastros.add(menuAutores);
-			menuCadastros.add(menuExposicoes);
-			
-			menuCadastros.add(menuObras);			
-			menuObras.addActionListener( this );
-			
-		menuBar.add(mnVisitantes);
+		Menu menuBar = new Menu();
+		frame.setJMenuBar(menuBar.setMenu());
 		
 		
 		JLabel labelImagem = new JLabel("");
@@ -58,10 +40,7 @@ public class TelaPrincipal implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == menuObras){
-			frame.dispose();
-			new TelaCrudObra();
-		}
+		
 	}
 
 }

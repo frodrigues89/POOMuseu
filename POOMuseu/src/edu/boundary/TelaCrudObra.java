@@ -4,7 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Properties;
 import java.util.concurrent.BrokenBarrierException;
 
@@ -14,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -31,6 +35,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
+import edu.control.ControlObra;
+import edu.entity.Autor;
 import edu.entity.Obra;
 
 import com.jgoodies.forms.layout.FormSpecs;
@@ -39,6 +45,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Component;
 import javax.swing.JDesktopPane;
+import javax.swing.JFileChooser;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.JScrollPane;
@@ -48,17 +55,13 @@ public class TelaCrudObra implements ActionListener{
 	private JFrame frame = new JFrame();
 	private JPanel panelGeral = new JPanel();
 	
-	private JMenu menuAdm = new JMenu("Administrativo");
-	private JMenu menuCadastros = new JMenu("Cadastros");
-	private JMenu mnVisitantes = new JMenu("Visitantes");
-	private JMenuItem menuAutores = new JMenuItem("Autores");
-	private JMenuItem menuExposicoes = new JMenuItem("Exposi\u00E7\u00F5es");
-	private JMenuItem menuObras = new JMenuItem("Obras");
-	
-	private  JTextField txtCod = new JTextField();
+	private JTextField txtCod = new JTextField();
+	private JButton btnPesquisarCod = new JButton();
 	private JTextField txtNomeObra = new JTextField();
+	private JButton btnPesquisarNome = new JButton();
 	private JTextField txtNomeAutor = new JTextField();
-
+	private JButton btnPesquisarAutor = new JButton();
+	
 	private UtilDateModel model;
 	private JDatePickerImpl datePicker;
 	private JTextField txtAltura = new JTextField();
@@ -66,24 +69,44 @@ public class TelaCrudObra implements ActionListener{
 	private JTextField txtProfundidade = new JTextField();
 	private JTextField txtPeso = new JTextField();
 	private JTextArea txtInfoAdicionais = new JTextArea();
-
 	
-	private JLabel lblImagem = new JLabel();
-	private JLabel lblNomeImagem = new JLabel();
+	private JButton btnSalvar = new JButton("Salvar");
+	private JButton btnExcluir = new JButton("Excluir");
+	private JButton btnLimpar = new JButton("Limpar");
+	
+	private ControlObra control = new ControlObra();
 	
 	public TelaCrudObra() {
-		
-		
 		criarMenu();
 		criarForm();
 		inicializarTela();
 	}
+	
+	private void criarMenu(){
 
+		Menu menuBar = new Menu();
+		frame.setJMenuBar(menuBar.setMenu());
+	}
+	
 	private void criarForm() {
-		// TODO Auto-generated method stub
 		panelGeral.setBounds(0, 0, 602, 394);
 		panelGeral.setLayout(null);
 		
+		criarPanelNomeObra();
+		criarPanelInformacoes();
+		criarPanelBotoes();		
+		
+	}
+	
+	private void inicializarTela() {
+		frame.getContentPane().setLayout(null);
+		frame.getContentPane().add(panelGeral);
+		frame.setBounds(100, 100, 618, 454);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);		
+	}
+
+	private void criarPanelNomeObra(){
 		JPanel panelNomeObra = new JPanel();
 		panelNomeObra.setBounds(0, 0, 602, 99);
 		panelNomeObra.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -91,7 +114,7 @@ public class TelaCrudObra implements ActionListener{
 		
 		JLabel lblCod = new JLabel("Cod:");
 		lblCod.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblCod.setBounds(10, 15, 100, 14);
+		lblCod.setBounds(10, 17, 100, 14);
 		panelNomeObra.add(lblCod);
 		
 		txtCod.setBounds(120, 15, 74, 18);
@@ -100,7 +123,7 @@ public class TelaCrudObra implements ActionListener{
 		
 		JLabel lblNomeDaObra = new JLabel("Nome da Obra:");
 		lblNomeDaObra.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNomeDaObra.setBounds(10, 40, 100, 14);
+		lblNomeDaObra.setBounds(10, 43, 100, 14);
 		panelNomeObra.add(lblNomeDaObra);
 		
 		txtNomeObra.setBounds(120, 40, 347, 20);
@@ -109,19 +132,35 @@ public class TelaCrudObra implements ActionListener{
 	
 		JLabel lblAutorAutor = new JLabel("Autor:");
 		lblAutorAutor.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblAutorAutor.setBounds(10, 65, 100, 14);
+		lblAutorAutor.setBounds(10, 71, 100, 14);
 		panelNomeObra.add(lblAutorAutor);
 
-		txtNomeAutor.setBounds(120, 65, 347, 20);
+		txtNomeAutor.setBounds(120, 71, 347, 20);
 		panelNomeObra.add(txtNomeAutor);
 		
 		panelGeral.add(panelNomeObra);
 		
 		
+		btnPesquisarCod.setBounds(204, 5, 30, 30);
+		btnPesquisarCod.setIcon(new ImageIcon(TelaCrudObra.class.getResource("/edu/imageRepository/lupaIcon.png")));
+		panelNomeObra.add(btnPesquisarCod);
+		btnPesquisarCod.addActionListener(this);
 		
+		
+		btnPesquisarNome.setBounds(479, 30, 30, 30);
+		btnPesquisarNome.setIcon(new ImageIcon(TelaCrudObra.class.getResource("/edu/imageRepository/lupaIcon.png")));
+		panelNomeObra.add(btnPesquisarNome);
+		btnPesquisarNome.addActionListener(this);
+		
+		btnPesquisarAutor.setBounds(479, 64, 30, 30);
+		btnPesquisarAutor.setIcon(new ImageIcon(TelaCrudObra.class.getResource("/edu/imageRepository/lupaIcon.png")));
+		panelNomeObra.add(btnPesquisarAutor);
+		btnPesquisarAutor.addActionListener(this);
+	}
+	
+	private void criarPanelInformacoes(){
 		JPanel panelInformacoes = new JPanel();
-		panelInformacoes.setBounds(0, 99, 301, 295);
-		
+		panelInformacoes.setBounds(0, 99, 602, 211);
 		
 		JLabel lblDataObra = new JLabel("Data da Obra:");
 		lblDataObra.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -184,7 +223,7 @@ public class TelaCrudObra implements ActionListener{
 		
 		
 		JLabel lblInfoAdicionais = new JLabel("Informações Adicionais:");
-		lblInfoAdicionais.setBounds(10, 180, 281, 14);
+		lblInfoAdicionais.setBounds(296, 54, 281, 14);
 		panelInformacoes.add(lblInfoAdicionais);
 		
 		panelGeral.add(panelInformacoes);
@@ -192,66 +231,87 @@ public class TelaCrudObra implements ActionListener{
 		txtInfoAdicionais.setBorder(UIManager.getBorder("Button.border"));
 		
 		txtInfoAdicionais.setRows(5);
-		txtInfoAdicionais.setBounds(10, 200, 281, 84);
+		txtInfoAdicionais.setBounds(296, 85, 281, 84);
 		panelInformacoes.add(txtInfoAdicionais);
-		
-
-		
-		JPanel panelImagem = new JPanel();
-		panelImagem.setBounds(301, 99, 301, 295);
-		panelImagem.setLayout(new BorderLayout(0, 0));
-		
-		lblImagem.setIcon(new ImageIcon(TelaCrudObra.class.getResource("/edu/imageRepository/quadro128.png")));
-		lblImagem.setHorizontalAlignment(0);
-		panelImagem.add(lblImagem,BorderLayout.CENTER);
-		
-		lblNomeImagem.setText("INSIRA A IMAGEM DA OBRA!");
-		lblNomeImagem.setHorizontalAlignment(0);
-		panelImagem.add(lblNomeImagem, BorderLayout.SOUTH);
-		
-		panelGeral.add(panelImagem);
-	}
-
-	private void criarMenu(){
-		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
-			
-		menuBar.add(menuAdm);
-		
-		menuBar.add(menuCadastros);
-			
-			menuCadastros.add(menuAutores);
-			menuAutores.addActionListener(this);
-			menuCadastros.add(menuExposicoes);
-			
-			menuCadastros.add(menuObras);			
-			menuObras.addActionListener( this );
-			
-		menuBar.add(mnVisitantes);
 	}
 	
-	private void inicializarTela() {
-		frame.getContentPane().setLayout(null);
-		frame.getContentPane().add(panelGeral);
-		frame.setBounds(100, 100, 618, 454);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);		
+	private void criarPanelBotoes(){
+		JPanel panelBotoes = new JPanel();
+		
+		panelBotoes.setBounds(0, 308, 602, 86);
+		panelGeral.add(panelBotoes);
+		panelBotoes.setLayout(new FlowLayout(FlowLayout.CENTER, 80, 30));
+		
+		panelBotoes.add(btnExcluir);
+		btnExcluir.addActionListener(this);
+		
+		panelBotoes.add(btnLimpar);
+		btnLimpar.addActionListener(this);
+		
+		panelBotoes.add(btnSalvar);
+		btnSalvar.addActionListener(this);
 	}
-
+	
+	private void limparTela(){
+		txtCod.setText("");
+		txtNomeObra.setText("");
+		txtNomeAutor.setText("");
+		txtAltura.setText("");
+		txtLargura.setText("");
+		txtPeso.setText("");
+		txtProfundidade.setText("");
+	}
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == menuObras){
-			frame.dispose();
-			new TelaCrudObra();
+		if (e.getSource() == btnSalvar){
+			if (control.pesquisarPorCod(Integer.parseInt(txtCod.getText())) == null){
+				control.addObra(formToObra());
+			}else{
+				if (JOptionPane.showConfirmDialog(null, 
+						"Esta Obra já existe, tem certeza que deseja fazer as alterações?",
+						"Confirmação",
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.WARNING_MESSAGE) == 0){
+					control.updateObra(formToObra());
+				}else{
+					JOptionPane.showMessageDialog(null,
+							"Você optou por não realizar as alterações",
+							"Alteração não confirmada",
+							JOptionPane.WARNING_MESSAGE);
+				}				
+			}
 		}
+		if( e.getSource() == btnLimpar ){
+			limparTela();
+		}
+		if( e.getSource() == btnExcluir ){
+			control.excluirObra(formToObra());
+		}
+		if( e.getSource() == btnPesquisarCod ){
+			obraToForm( control.pesquisarPorCod( Integer.parseInt( txtCod.getText() ) ) );			
+		}
+		if( e.getSource() == btnPesquisarNome ){
+			obraToForm( control.pesquisarPorNome( txtNomeObra.getText() ) );
+		}
+		if ( e.getSource() == btnPesquisarAutor ){
+			TelaSeleciona ts = new TelaSeleciona();
+			ArrayList listaAutores = ts.selecionaItens(1);
+		}
+		
+		
 	}
 	
-	//faltando o Autor
 	private void obraToForm(Obra o){
 		txtCod.setText(o.getCodigoObra().toString());
 		txtNomeObra.setText(o.getTituloObra());
-		txtNomeAutor.setText(o.getAutorObra().getNomePessoa());
+		String nomesAutores = new String();
+		for (int i= 0; i < o.getAutoresObra().size(); i++){
+			nomesAutores += (", "+ o.getAutoresObra().get(i).getNomePessoa());
+		}
+		txtNomeAutor.setText(nomesAutores);
+		
 		model.setDate(o.getDataObra().getYear(), (o.getDataObra().getMonth()-1), o.getDataObra().getDay());
 		model.setSelected(true);
 		txtAltura.setText(o.getAlturaObra().toString());
@@ -261,7 +321,6 @@ public class TelaCrudObra implements ActionListener{
 		txtInfoAdicionais.setText(o.getInfoAdicionais());
 	}
 	
-	//faltando o Autor
 	private Obra formToObra (){
 		Obra o = new Obra();
 		o.setCodigoObra( Integer.parseInt( txtCod.getText() ) );

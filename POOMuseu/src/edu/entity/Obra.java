@@ -1,5 +1,7 @@
 package edu.entity;
 
+import java.awt.List;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Obra {
@@ -12,8 +14,9 @@ public class Obra {
     private Double larguraObra;
     private Double profundidadeObra;
     private Double pesoObra;
-    private Autor autorObra;
+    private ArrayList<Autor> autoresObra;
     private String infoAdicionais;
+    
 	public String getInfoAdicionais() {
 		return infoAdicionais;
 	}
@@ -68,11 +71,11 @@ public class Obra {
 	public void setPesoObra(Double pesoObra) {
 		this.pesoObra = pesoObra;
 	}
-	public Autor getAutorObra() {
-		return autorObra;
+	public ArrayList<Autor> getAutoresObra() {
+		return autoresObra;
 	}
-	public void setAutorObra(Autor autorObra) {
-		this.autorObra = autorObra;
+	public void setAutoresObra(ArrayList<Autor> autoresObra) {
+		this.autoresObra = autoresObra;
 	}
 	
     
