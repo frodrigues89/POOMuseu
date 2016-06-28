@@ -24,7 +24,7 @@ public class TelaPrincipal implements ActionListener {
 	
 	private void criarTela(){
 		Menu menuBar = new Menu();
-		frame.setJMenuBar(menuBar.setMenu());
+		frame.setJMenuBar(menuBar.setMenu(this.frame));
 		
 		
 		JLabel labelImagem = new JLabel("");

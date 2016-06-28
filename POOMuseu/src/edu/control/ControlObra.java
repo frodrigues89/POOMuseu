@@ -1,7 +1,11 @@
 package edu.control;
 
+import java.util.ArrayList;
+
 import edu.dao.DAOObra;
 import edu.dao.DAOObraImpl;
+
+import edu.entity.Autor;
 import edu.entity.Obra;
 
 public class ControlObra {

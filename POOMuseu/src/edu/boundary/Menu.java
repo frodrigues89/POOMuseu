@@ -16,10 +16,11 @@ public class Menu implements ActionListener{
 	private JMenuItem menuExposicoes = new JMenuItem("Exposi\u00E7\u00F5es");
 	private JMenuItem menuObras = new JMenuItem("Obras");
 	
+	private JFrame tela;
 	
-	public JMenuBar setMenu(){
+	public JMenuBar setMenu(JFrame tela){
 		JMenuBar menuBar = new JMenuBar();
-			
+		this.tela = tela;
 		menuBar.add(menuAdm);
 		
 		menuBar.add(menuCadastros);
@@ -38,6 +39,7 @@ public class Menu implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == menuObras){
+			tela.dispose();
 			new TelaCrudObra();
 		}
 	}

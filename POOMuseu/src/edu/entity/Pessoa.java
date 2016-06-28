@@ -7,9 +7,18 @@ public class Pessoa {
 	private int codigoPessoa;
 	private String nomePessoa;
 	private String dctoPessoa;
+	private TipoDocumento tipoDocto;
 	private String emailPessoa;
 	private Date dataNascPessoa;
 	private Genero generoPessoa;
+	
+	
+	public TipoDocumento getTipoDocto() {
+		return tipoDocto;
+	}
+	public void setTipoDocto(TipoDocumento tipoDocto) {
+		this.tipoDocto = tipoDocto;
+	}
 	public int getCodigoPessoa() {
 		return codigoPessoa;
 	}

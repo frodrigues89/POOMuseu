@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Funcionario extends Pessoa {
 	
+	private int idFuncionario;
 	private String ctps;
 	private Cargo cargo;
 	private Setor setor;
@@ -15,6 +16,24 @@ public class Funcionario extends Pessoa {
 	private int bonus;
 	private List<Date> listaFerias;
 	
+	
+	
+	public int getIdFuncionario() {
+		return idFuncionario;
+	}
+
+	public void setIdFuncionario(int idFuncionario) {
+		this.idFuncionario = idFuncionario;
+	}
+
+	public List<Date> getListaFerias() {
+		return listaFerias;
+	}
+
+	public void setListaFerias(List<Date> listaFerias) {
+		this.listaFerias = listaFerias;
+	}
+
 	public int getBonus() {
 		return bonus;
 	}

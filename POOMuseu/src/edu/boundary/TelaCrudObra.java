@@ -74,6 +74,8 @@ public class TelaCrudObra implements ActionListener{
 	private JButton btnExcluir = new JButton("Excluir");
 	private JButton btnLimpar = new JButton("Limpar");
 	
+	private ArrayList listaDeAutores;
+	
 	private ControlObra control = new ControlObra();
 	
 	public TelaCrudObra() {
@@ -85,7 +87,7 @@ public class TelaCrudObra implements ActionListener{
 	private void criarMenu(){
 
 		Menu menuBar = new Menu();
-		frame.setJMenuBar(menuBar.setMenu());
+		frame.setJMenuBar(menuBar.setMenu(this.frame));
 	}
 	
 	private void criarForm() {
@@ -296,8 +298,7 @@ public class TelaCrudObra implements ActionListener{
 			obraToForm( control.pesquisarPorNome( txtNomeObra.getText() ) );
 		}
 		if ( e.getSource() == btnPesquisarAutor ){
-			TelaSeleciona ts = new TelaSeleciona();
-			ArrayList listaAutores = ts.selecionaItens(1);
+			TelaSeleciona telaSel = new TelaSeleciona(1);
 		}
 		
 		

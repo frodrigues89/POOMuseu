@@ -1,5 +1,7 @@
 package edu.dao;
 
+import java.util.ArrayList;
+
 import edu.entity.Obra;
 
 public class DAOObraImpl implements DAOObra{
@@ -32,6 +34,12 @@ public class DAOObraImpl implements DAOObra{
 	public int excluirObra(Obra o) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public ArrayList<Obra> pesquisaListaObras() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

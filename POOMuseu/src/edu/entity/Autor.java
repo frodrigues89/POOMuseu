@@ -4,10 +4,17 @@ import java.util.Date;
 
 public class Autor extends Pessoa {
 	
+	private int idAutor;
 	private boolean autorFalecido;	
 	private Date dataMorteAutor;
 	private String contatoAutor;
 	
+	public int getIdAutor() {
+		return idAutor;
+	}
+	public void setIdAutor(int idAutor) {
+		this.idAutor = idAutor;
+	}
 	public boolean isAutorFalecido() {
 		return autorFalecido;
 	}
